@@ -6,5 +6,8 @@
   "rust-analyzer.linkedProjects": ["./Cargo.toml"],
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/streamingfast/substreams/develop/schemas/manifest-schema.json": "substreams.yaml"
   }
 }
