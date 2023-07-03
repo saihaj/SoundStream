@@ -2,7 +2,7 @@ mod abi;
 mod pb;
 use hex_literal::hex;
 use pb::contract::v1::{self as contract, SoundEditions};
-use substreams::Hex;
+use substreams::{log, Hex};
 use substreams_entity_change::pb::entity::EntityChanges;
 use substreams_entity_change::tables::Tables;
 use substreams_ethereum::pb::eth::v2 as eth;
@@ -204,10 +204,11 @@ pub fn graph_out(
     let mut tables = Tables::new();
 
     sound_editions.editions.into_iter().for_each(|edition| {
+        log::info!("edition: {:?}", edition); // TODO: need to see why this log is not printed?
         tables
             .create_row("SoundEdition", edition.sound_edition)
-            .set("transactionHash", &hex::decode(&edition.trx_hash).unwrap())
-            .set("deployer", &hex::decode(&edition.deployer).unwrap())
+            .set("transactionHash", edition.trx_hash)
+            .set("deployer", edition.deployer)
             .set("blockNumber", edition.block_number);
     });
 
