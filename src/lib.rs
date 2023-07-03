@@ -119,14 +119,14 @@ fn map_events(blk: eth::Block) -> Result<contract::Events, substreams::errors::E
                         abi::contract::events::SoundEditionCreated::match_and_decode(log)
                     {
                         return Some(contract::SoundEditionCreated {
-                            trx_hash: Hex(&view.transaction.hash).to_string(),
+                            trx_hash: format!("0x{}", Hex(&view.transaction.hash)),
                             log_index: log.block_index,
                             contracts: event.contracts.into_iter().map(|x| x).collect::<Vec<_>>(),
                             data: event.data.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            deployer: event.deployer,
+                            deployer: format!("0x{}", Hex(&event.deployer)),
                             init_data: event.init_data,
                             results: event.results.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            sound_edition: Hex(&event.sound_edition).to_string(),
+                            sound_edition: format!("0x{}", Hex(&event.sound_edition)),
                             block_number: blk.number,
                         });
                     }
@@ -177,14 +177,14 @@ fn map_sound_editions(
                         abi::contract::events::SoundEditionCreated::match_and_decode(log)
                     {
                         return Some(contract::SoundEditionCreated {
-                            trx_hash: Hex(&view.transaction.hash).to_string(),
+                            trx_hash: format!("0x{}", Hex(&view.transaction.hash)),
                             log_index: log.block_index,
                             contracts: event.contracts.into_iter().map(|x| x).collect::<Vec<_>>(),
                             data: event.data.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            deployer: event.deployer,
+                            deployer: format!("0x{}", Hex(&event.deployer)),
                             init_data: event.init_data,
                             results: event.results.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            sound_edition: Hex(&event.sound_edition).to_string(),
+                            sound_edition: format!("0x{}", Hex(&event.sound_edition)),
                             block_number: blk.number,
                         });
                     }

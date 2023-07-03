@@ -45,7 +45,7 @@ message SoundEditionCreated {
     string trx_hash = 1;
     uint32 log_index = 2;
     string sound_edition = 3;
-    bytes deployer = 4;
+    string deployer = 4;
     bytes init_data = 5;
     repeated bytes contracts = 6;
     repeated bytes data = 7;
