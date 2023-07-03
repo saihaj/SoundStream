@@ -1,0 +1,31 @@
+{
+  "name": "soundstream",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Substream powered subgraph for Sound.xyz",
+  "author": "Saihajpreet Singh <saihajpreet.singh@gmail.com> (https://saihaj.dev/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saihaj/SoundStream"
+  },
+  "bugs": {
+    "url": "https://github.com/saihaj/SoundStream/issues"
+  },
+  "scripts": {
+    "build:subgraph": "graph build",
+    "build:substream": "cargo build --target wasm32-unknown-unknown --release",
+    "build": "pnpm build:substream && pnpm build:subgraph",
+    "deploy": "graph deploy --product hosted-service saihaj/sound_substream",
+    "generate:graph": "graph codegen",
+    "generate:spkg": "substreams pack substreams.yaml",
+    "generate:protogen": "substreams protogen ./substreams.yaml --exclude-paths='sf/substreams,google'",
+    "generate": "pnpm generate:protogen && pnpm generate:spkg"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.51.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.8"
+  }
+}

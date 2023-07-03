@@ -1,0 +1,9 @@
+type SoundEdition @entity {
+  id: ID!
+  "The block number of the contract deployment"
+  blockNumber: BigInt!
+  "Creator of the contract"
+  deployer: Bytes!
+  "Transaction hash of the contract deployment"
+  transactionHash: Bytes!
+}

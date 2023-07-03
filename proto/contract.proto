@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package contract.v1;
+
+message Events {
+    repeated OwnershipHandoverCanceled ownership_handover_canceleds = 1;
+    repeated OwnershipHandoverRequested ownership_handover_requesteds = 2;
+    repeated OwnershipTransferred ownership_transferreds = 3;
+    repeated RolesUpdated roles_updateds = 4;
+    repeated SoundEditionCreated sound_edition_createds = 5;
+    repeated SoundEditionImplementationSet sound_edition_implementation_sets = 6;
+}
+
+message SoundEditions  {
+    repeated SoundEditionCreated editions = 1;
+}
+
+message OwnershipHandoverCanceled {
+    string trx_hash = 1;
+    uint32 log_index = 2;
+    bytes pending_owner = 3;
+}
+
+message OwnershipHandoverRequested {
+    string trx_hash = 1;
+    uint32 log_index = 2;
+    bytes pending_owner = 3;
+}
+
+message OwnershipTransferred {
+    string trx_hash = 1;
+    uint32 log_index = 2;
+    bytes old_owner = 3;
+    bytes new_owner = 4;
+}
+
+message RolesUpdated {
+    string trx_hash = 1;
+    uint32 log_index = 2;
+    bytes user = 3;
+    string roles = 4;
+}
+
+message SoundEditionCreated {
+    string trx_hash = 1;
+    uint32 log_index = 2;
+    string sound_edition = 3;
+    bytes deployer = 4;
+    bytes init_data = 5;
+    repeated bytes contracts = 6;
+    repeated bytes data = 7;
+    repeated bytes results = 8;
+    uint64 block_number = 9;
+}
+
+message SoundEditionImplementationSet {
+    string trx_hash = 1;
+    uint32 log_index = 2;
+    bytes new_implementation = 3;
+}
