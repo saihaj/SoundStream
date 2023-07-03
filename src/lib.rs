@@ -119,14 +119,14 @@ fn map_events(blk: eth::Block) -> Result<contract::Events, substreams::errors::E
                         abi::contract::events::SoundEditionCreated::match_and_decode(log)
                     {
                         return Some(contract::SoundEditionCreated {
-                            trx_hash: Hex(&view.transaction.hash).to_string(),
+                            trx_hash: view.transaction.hash.clone(),
                             log_index: log.block_index,
                             contracts: event.contracts.into_iter().map(|x| x).collect::<Vec<_>>(),
                             data: event.data.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            deployer: Hex(&event.deployer).to_string(),
+                            deployer: event.deployer,
                             init_data: event.init_data,
                             results: event.results.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            sound_edition: Hex(&event.sound_edition).to_string(),
+                            sound_edition: event.sound_edition,
                             block_number: blk.number,
                         });
                     }
@@ -177,14 +177,14 @@ fn map_sound_editions(
                         abi::contract::events::SoundEditionCreated::match_and_decode(log)
                     {
                         return Some(contract::SoundEditionCreated {
-                            trx_hash: Hex(&view.transaction.hash).to_string(),
+                            trx_hash: view.transaction.hash.clone(),
                             log_index: log.block_index,
                             contracts: event.contracts.into_iter().map(|x| x).collect::<Vec<_>>(),
                             data: event.data.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            deployer: Hex(&event.deployer).to_string(),
+                            deployer: event.deployer,
                             init_data: event.init_data,
                             results: event.results.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            sound_edition: Hex(&event.sound_edition).to_string(),
+                            sound_edition: event.sound_edition,
                             block_number: blk.number,
                         });
                     }
@@ -206,7 +206,7 @@ pub fn graph_out(
     sound_editions.editions.into_iter().for_each(|edition| {
         log::info!("edition: {:?}", edition); // TODO: need to see why this log is not printed?
         tables
-            .create_row("SoundEdition", edition.sound_edition)
+            .create_row("SoundEdition", Hex(&edition.sound_edition).to_string())
             .set("transactionHash", edition.trx_hash)
             .set("deployer", edition.deployer)
             .set("blockNumber", edition.block_number);
