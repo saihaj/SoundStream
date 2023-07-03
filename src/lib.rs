@@ -119,14 +119,14 @@ fn map_events(blk: eth::Block) -> Result<contract::Events, substreams::errors::E
                         abi::contract::events::SoundEditionCreated::match_and_decode(log)
                     {
                         return Some(contract::SoundEditionCreated {
-                            trx_hash: format!("0x{}", Hex(&view.transaction.hash)),
+                            trx_hash: Hex(&view.transaction.hash).to_string(),
                             log_index: log.block_index,
                             contracts: event.contracts.into_iter().map(|x| x).collect::<Vec<_>>(),
                             data: event.data.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            deployer: format!("0x{}", Hex(&event.deployer)),
+                            deployer: Hex(&event.deployer).to_string(),
                             init_data: event.init_data,
                             results: event.results.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            sound_edition: format!("0x{}", Hex(&event.sound_edition)),
+                            sound_edition: Hex(&event.sound_edition).to_string(),
                             block_number: blk.number,
                         });
                     }
@@ -177,14 +177,14 @@ fn map_sound_editions(
                         abi::contract::events::SoundEditionCreated::match_and_decode(log)
                     {
                         return Some(contract::SoundEditionCreated {
-                            trx_hash: format!("0x{}", Hex(&view.transaction.hash)),
+                            trx_hash: Hex(&view.transaction.hash).to_string(),
                             log_index: log.block_index,
                             contracts: event.contracts.into_iter().map(|x| x).collect::<Vec<_>>(),
                             data: event.data.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            deployer: format!("0x{}", Hex(&event.deployer)),
+                            deployer: Hex(&event.deployer).to_string(),
                             init_data: event.init_data,
                             results: event.results.into_iter().map(|x| x).collect::<Vec<_>>(),
-                            sound_edition: format!("0x{}", Hex(&event.sound_edition)),
+                            sound_edition: Hex(&event.sound_edition).to_string(),
                             block_number: blk.number,
                         });
                     }
@@ -206,8 +206,8 @@ pub fn graph_out(
     sound_editions.editions.into_iter().for_each(|edition| {
         tables
             .create_row("SoundEdition", edition.sound_edition)
-            .set("transactionHash", edition.trx_hash)
-            .set("deployer", edition.deployer)
+            .set("transactionHash", &hex::decode(&edition.trx_hash).unwrap())
+            .set("deployer", &hex::decode(&edition.deployer).unwrap())
             .set("blockNumber", edition.block_number);
     });
 
