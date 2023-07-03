@@ -3,6 +3,7 @@ mod pb;
 use hex_literal::hex;
 use pb::contract::v1::{self as contract, SoundEditions};
 use substreams::{log, Hex};
+use substreams_database_change::pb::database::DatabaseChanges;
 use substreams_entity_change::pb::entity::EntityChanges;
 use substreams_entity_change::tables::Tables;
 use substreams_ethereum::pb::eth::v2 as eth;
@@ -213,4 +214,20 @@ pub fn graph_out(
     });
 
     Ok(tables.to_entity_changes())
+}
+
+#[substreams::handlers::map]
+pub fn db_out(sound_editions: SoundEditions) -> Result<DatabaseChanges, substreams::errors::Error> {
+    let mut tables = substreams_database_change::tables::Tables::new();
+
+    sound_editions.editions.into_iter().for_each(|edition| {
+        log::info!("edition: {:?}", edition); // TODO: need to see why this log is not printed?
+        tables
+            .create_row("sound_editions", Hex(&edition.sound_edition).to_string())
+            .set("transactionHash", edition.trx_hash)
+            .set("deployer", edition.deployer)
+            .set("blockNumber", edition.block_number);
+    });
+
+    Ok(tables.to_database_changes())
 }

@@ -727,6 +727,7 @@ dependencies = [
  "num-traits",
  "prost",
  "substreams",
+ "substreams-database-change",
  "substreams-entity-change",
  "substreams-ethereum",
 ]
@@ -756,6 +757,17 @@ dependencies = [
  "substreams-macro",
  "thiserror",
  "wee_alloc",
+]
+
+[[package]]
+name = "substreams-database-change"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0a3407c2a9c2064ef1e026b5162846249580ad353a3baa5cef288748f8401550"
+dependencies = [
+ "prost",
+ "prost-types",
+ "substreams",
 ]
 
 [[package]]

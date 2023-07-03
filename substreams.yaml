@@ -4,6 +4,7 @@ package:
   version: v0.1.0
 
 imports: # dependencies
+  database_change: https://github.com/streamingfast/substreams-database-change/releases/download/v1.1.3/substreams-database-change-v1.1.3.spkg
   entity: https://github.com/streamingfast/substreams-entity-change/releases/download/v0.2.1/substreams-entity-change-v0.2.1.spkg
 
 protobuf:
@@ -40,3 +41,10 @@ modules:
       - map: map_sound_editions
     output:
       type: proto:substreams.entity.v1.EntityChanges
+
+  - name: db_out
+    kind: map
+    inputs:
+      - map: map_sound_editions
+    output:
+      type: proto:sf.substreams.sink.database.v1.DatabaseChanges
